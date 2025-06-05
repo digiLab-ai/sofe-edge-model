@@ -5,12 +5,20 @@ import time
 from models.two_point_model import edge_simulator
 
 st.title("Tokamak Erosion Lifetime Simulator")
-p_in = st.number_input(
-    "Input Power (MW)", 
-    value=1.0,
-    step=10.0,
-    min_value=0.1,
-    max_value=10000.0)
+
+# Log-scale input
+log10_p_in = st.number_input(
+    "Log₁₀(Input Power [MW])", 
+    value=0.0,
+    step=0.1,
+    min_value=-1.0,
+    max_value=4.0,
+    format="%.1f"
+)
+
+# Convert and show actual power (linear scale)
+p_in = 10 ** log10_p_in
+st.markdown(f"**Input Power:** {p_in:.2f} MW")
 
 MEGA = 1.e6
 TIME_DELAY = 5  # s
