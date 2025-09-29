@@ -86,7 +86,7 @@ def variable_fixed_controls(
     label: str,
     ranges: Dict[str, Tuple[float, float]],
     defaults: Dict[str, float],
-    default_variable: Tuple[str, ...] = ("power", "upstream_density"),
+    default_variable: Tuple[str, ...] = ("upstream_density",),
 ):
     st.subheader(f"{label} • Variable/Fixed Controls")
     n = st.number_input(
@@ -102,7 +102,6 @@ def variable_fixed_controls(
         for k, (a, b) in ranges.items():
             cols = st.columns([1.6, 1, 1, 1.2])
 
-            # Only 'power' and 'upstream_density' default to variable (unless user already set it in session)
             default_var = (k in default_variable)
             var_flags[k] = cols[0].checkbox(
                 f"{k} is variable",
@@ -211,7 +210,7 @@ def run_tab(
     rng: np.random.Generator,
     default_prefix: str,
     fixed_defaults: Dict[str, float] | None = None,
-    default_variable: Tuple[str, ...] = ("power", "upstream_density"),
+    default_variable: Tuple[str, ...] = ("upstream_density",),
 ):
     apply_branding()
     # Use caller-specified fixed defaults if provided; else fall back to midpoints
@@ -285,10 +284,10 @@ with col2:
 st.caption("Choose inputs, evaluate erosion lifetime, preview, plot, and download a CSV.")
 with st.sidebar:
     st.header("Inputs configuration")
-    default_names = ["power", "upstream_density", "f_cond", "f_mom", "f_pow", "connection_length", "lambda_q", "R_m"]
+    default_names = ["upstream_density", "power", "f_cond", "f_mom", "f_pow", "connection_length", "lambda_q", "R_m"]
     ranges: Dict[str, Tuple[float, float]] = {
-        "power": (0.1, 500.0),                 # MW
         "upstream_density": (0.1, 100.0),      # 1e19 m^-3
+        "power": (0.01, 100.0),                 # MW
         "f_cond": (0.5, 1.0),                  # –
         "f_mom": (0.5, 1.0),                   # –
         "f_pow": (0.0, 0.95),                  # –
@@ -305,8 +304,8 @@ with st.sidebar:
 
     # Your chosen *fixed-value* defaults (these are just examples — edit as you like)
     fixed_defaults = {
-        "power": 50.0,               # MW 
         "upstream_density": 10.0,     # 1e19 m^-3
+        "power": 50.0,               # MW 
         "f_cond": 0.9,
         "f_mom": 0.9,
         "f_pow": 0.4,
@@ -315,7 +314,6 @@ with st.sidebar:
         "R_m": 5.,
     }
 
-# Run with your defaults and only power + upstream_density variable by default
 rng = np.random.default_rng(42)
 run_tab(
     label="Erosion Lifetime",
@@ -324,14 +322,14 @@ run_tab(
     rng=rng,
     default_prefix="erosion_lifetime",
     fixed_defaults=fixed_defaults,
-    default_variable=("power", "upstream_density"),
+    default_variable=("upstream_density"),
 )
 
 
 with st.expander("Parameters & Units (summary)", expanded=False):
     units_df = pd.DataFrame([
-        {"Parameter": "power", "Units": "MW", "Description": "Plasma power."},
         {"Parameter": "upstream_density", "Units": "10^19 m^-3", "Description": "Upstream electron number density."},
+        {"Parameter": "power", "Units": "MW", "Description": "Plasma power."},
         {"Parameter": "f_cond", "Units": "–", "Description": "Fraction of heat flux density carried by conduction."},
         {"Parameter": "f_mom", "Units": "–", "Description": "Fraction of momentum dissipated from upstream to downstream."},
         {"Parameter": "f_pow", "Units": "–", "Description": "Fraction of power dissipated from upstream to downstream."},

@@ -218,7 +218,7 @@ class TwoPointModel:
     """
 
     def __init__(self,
-                 power: float = 1.0e6,                 # W
+                 power: float = 50.0e6,                 # W
                  upstream_density: float = 7.3e19,     # m^-3
                  connection_length: float = 50.0,  # m
                  lambda_q: float = 5.0e-3,             # m (midplane heat-flux width)
@@ -318,11 +318,7 @@ class TwoPointModel:
         return Tt, nt
 
 
-def edge_simulator(power: float,                 # W
-                 upstream_density: float,     # m^-3
-                 **kwargs):
+def edge_simulator(**kwargs):
     # return 10E24/TwoPointModel(*args, **kwargs)()
     return TwoPointModel(
-        power=power, 
-        upstream_density=upstream_density,
          **kwargs)()
