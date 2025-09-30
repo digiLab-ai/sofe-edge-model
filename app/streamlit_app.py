@@ -67,8 +67,8 @@ def apply_branding():
     st.session_state["_branding_injected"] = True
 
 UNITS = {
-    "power": "MW",
     "upstream_density": "10¹⁹ m⁻³",
+    "power": "MW",
     "f_cond": "–",
     "f_mom": "–",
     "f_pow": "–",
