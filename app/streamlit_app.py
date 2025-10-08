@@ -91,7 +91,7 @@ def variable_fixed_controls(
     st.subheader(f"{label} • Variable/Fixed Controls")
     n = st.number_input(
         "Number of points (per sweep / random batch)",
-        min_value=1, max_value=200_000, value=20, step=10, key=f"{label}_vf_n"
+        min_value=1, max_value=200_000, value=30, step=10, key=f"{label}_vf_n"
     )
 
     var_flags: Dict[str, bool] = {}
