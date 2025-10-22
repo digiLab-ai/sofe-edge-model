@@ -322,7 +322,7 @@ run_tab(
     rng=rng,
     default_prefix="erosion_lifetime",
     fixed_defaults=fixed_defaults,
-    default_variable=("upstream_density"),
+    default_variable=("upstream_density", "power"),
 )
 
 
