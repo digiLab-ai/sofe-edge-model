@@ -306,15 +306,22 @@ with st.sidebar:
     fixed_defaults = {
         "upstream_density": 10.0,     # 1e19 m^-3
         "power": 50.0,               # MW 
-        "f_cond": 0.9,
-        "f_mom": 0.9,
-        "f_pow": 0.4,
+        "f_cond": 0.7,
+        "f_mom": 0.7,
+        "f_pow": 0.2,
         "connection_length": 50.0,
-        "lambda_q": 0.005,
+        "lambda_q": 0.01,
         "R_m": 5.,
     }
 
-rng = np.random.default_rng(42)
+    seed = st.slider("Random number seed",
+                         min_value=1,
+                          max_value=100,
+                           value=42,
+                            step=1)
+
+
+rng = np.random.default_rng(seed)
 run_tab(
     label="Erosion Lifetime",
     key_prefix="edge",
