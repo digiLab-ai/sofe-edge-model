@@ -86,12 +86,12 @@ def variable_fixed_controls(
     label: str,
     ranges: Dict[str, Tuple[float, float]],
     defaults: Dict[str, float],
-    default_variable: Tuple[str, ...] = ("upstream_density",),
+    default_variable: Tuple[str, ...] = ("upstream_density", "power"),
 ):
     st.subheader(f"{label} • Variable/Fixed Controls")
     n = st.number_input(
         "Number of points (per sweep / random batch)",
-        min_value=1, max_value=200_000, value=20, step=10, key=f"{label}_vf_n"
+        min_value=1, max_value=200_000, value=30, step=10, key=f"{label}_vf_n"
     )
 
     var_flags: Dict[str, bool] = {}
@@ -210,7 +210,7 @@ def run_tab(
     rng: np.random.Generator,
     default_prefix: str,
     fixed_defaults: Dict[str, float] | None = None,
-    default_variable: Tuple[str, ...] = ("upstream_density",),
+    default_variable: Tuple[str, ...] = ("upstream_density", "power"),
 ):
     apply_branding()
     # Use caller-specified fixed defaults if provided; else fall back to midpoints
